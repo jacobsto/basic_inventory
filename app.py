@@ -19,3 +19,8 @@ def ensure_users_ready():
             writer = csv.DictWriter(f, fieldnames=USER_COLUMNS) #Writes column headers into the first line
             writer.writeheader()            
             writer.writerow({"username": "admin", "password": "admin123", "role": "admin"}) #Default admin account
+
+def read_all():
+    ensure_csv_ready() #Make sure the csv exists before opening it
+    with open(CSV_PATH, "r", newline="", encoding="utf-8") as f: #Open the file in read mode
+        return list (csv.DictReader(f)) #Read each row as a dictionary
