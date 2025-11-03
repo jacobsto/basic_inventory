@@ -77,3 +77,19 @@ def add_item(added_by): #Create a new inventory record with validated data and a
     }
     append_row(row)
     print("Item added.\n")
+
+def list_items(): #Display all record in the inventory in a readable format.
+    print("\n------------------------ All Items ------------------------")
+    rows = read_all()
+    if not rows:
+        print("(no items)\n")
+        return
+    print(f"{'ID':<4} {'Name':<16}{'Qty':<5} {'Unit':<8} {'Added By':<10} {'Date':<12}")
+    print("-" * 59)
+    for r in rows:
+        print(f"{r.get('item_id',''):<4} "
+          f"{r.get('item_name',''):<15} "
+          f"{r.get('quantity',''):<5} "
+          f"{r.get('unit',''):<8} "
+          f"{r.get('added_by',''):<10} "
+          f"{r.get('date_added',''):<12}")
