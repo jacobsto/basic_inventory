@@ -183,3 +183,71 @@ def login(): #Authenticate the user and return their identity and role.
                 return u["username"], u["role"]
 
         print("Invalid username or password. Please try again.\n")
+
+def main(): #Main menu, prepare files, authenticate and send user to the correct menu.
+    ensure_csv_ready()
+    ensure_users_ready()
+
+    username, role = login()
+
+    if role == "unprivileged":
+        # Read-only mode
+        while True:
+            print("View-Only Menu")
+            print("1) List items")
+            print("2) Quit")
+            choice = input("Choose (1/2): ").strip()
+            if choice == "1":
+                list_items()
+            elif choice == "2":
+                print("Goodbye!")
+                break
+            else:
+                print("Unknown option.\n")
+
+    elif role == "privileged":
+        # Normal inventory access
+        while True:
+            print("Basic Inventory")
+            print("1) Add item")
+            print("2) List items")
+            print("3) Delete item")
+            print("4) Quit")
+            choice = input("Choose (1/2/3/4): ").strip()
+
+            if choice == "1":
+                add_item(username)
+            elif choice == "2":
+                list_items()
+            elif choice == "3":
+                delete_item()
+            elif choice == "4":
+                print("Goodbye!")
+                break
+            else:
+                print("Unknown option.\n")
+
+    elif role == "admin":
+        # Full control
+        while True:
+            print("Admin Menu")
+            print("1) Add item")
+            print("2) List items")
+            print("3) Delete item")
+            print("4) Manage users")
+            print("5) Quit")
+            choice = input("Choose (1/2/3/4/5): ").strip()
+
+            if choice == "1":
+                add_item(username)
+            elif choice == "2":
+                list_items()
+            elif choice == "3":
+                delete_item()
+            elif choice == "4":
+                manage_users()
+            elif choice == "5":
+                print("Goodbye!")
+                break
+            else:
+                print("Unknown option.\n")
