@@ -168,3 +168,18 @@ def manage_users(): #Allow the admin to view and manage user accounts.
             break
         else:
             print("Invalid choice.\n")
+
+def login(): #Authenticate the user and return their identity and role.
+    """Prompt for login until successful. Returns (username, role)."""
+    users = read_users()
+    while True:
+        print("\n--- Login ---")
+        username = input("Username: ").strip()
+        password = input("Password: ").strip()
+
+        for u in users:
+            if u["username"] == username and u["password"] == password:
+                print(f"\nWelcome, {username}! Role: {u['role'].capitalize()}\n")
+                return u["username"], u["role"]
+
+        print("Invalid username or password. Please try again.\n")
