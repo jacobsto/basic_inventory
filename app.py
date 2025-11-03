@@ -30,3 +30,10 @@ def read_users():
     ensure_users_ready() #Make sure the csv exists before opening it
     with open(USERS_CSV, "r", newline="", encoding="utf-8") as f: #Open the file in read mode
         return list(csv.DictReader(f)) #Read each row as a dictionary
+    
+def write_users(users):
+    """Overwrite users.csv with new user data."""
+    with open(USERS_CSV, "w", newline="", encoding="utf-8") as f: #Opens csv in write mode replacing existing contents
+        writer = csv.DictWriter(f, fieldnames=USER_COLUMNS) #Sets up a writer
+        writer.writeheader() #Writes column headers
+        writer.writerows(users) #Writes users back into file
