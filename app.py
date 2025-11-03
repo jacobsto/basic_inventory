@@ -24,3 +24,9 @@ def read_all():
     ensure_csv_ready() #Make sure the csv exists before opening it
     with open(CSV_PATH, "r", newline="", encoding="utf-8") as f: #Open the file in read mode
         return list (csv.DictReader(f)) #Read each row as a dictionary
+    
+def read_users():
+    """Read all user accounts from users.csv."""
+    ensure_users_ready() #Make sure the csv exists before opening it
+    with open(USERS_CSV, "r", newline="", encoding="utf-8") as f: #Open the file in read mode
+        return list(csv.DictReader(f)) #Read each row as a dictionary
