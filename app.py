@@ -251,3 +251,6 @@ def main(): #Main menu, prepare files, authenticate and send user to the correct
                 break
             else:
                 print("Unknown option.\n")
+
+if __name__ == "__main__":
+    main()
