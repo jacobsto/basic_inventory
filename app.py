@@ -37,3 +37,13 @@ def write_users(users):
         writer = csv.DictWriter(f, fieldnames=USER_COLUMNS) #Sets up a writer
         writer.writeheader() #Writes column headers
         writer.writerows(users) #Writes users back into file
+
+def next_item_id(): #Generates the next available unique item ID for new inventory ID entries.
+    rows = read_all()
+    max_id = 0
+    for r in rows:
+        try:
+            max_id = max(max_id, int(r.get("item_id", "0") or "0"))
+        except ValueError:
+            pass
+    return str(max_id + 1)
