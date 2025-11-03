@@ -53,3 +53,27 @@ def append_row(row): #Adds a new record to the inventory csv ensuring the file e
     with open(CSV_PATH, "a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f,fieldnames=COLUMNS)
         w.writerow(row)
+
+def add_item(added_by): #Create a new inventory record with validated data and append it to the csv.
+    print("\n--- Add Item ---")
+    name = input ("Item name: ").strip()
+    qty_text = input ("Quantity (whole number): ").strip()
+    unit = input("Unit (e.g. pcs): ").strip() or "pcs"
+    try:
+        qty = int(qty_text)
+        if qty <= 0:
+            print ("Quantity must be greater than 0.\n")
+            return
+    except ValueError:
+        print ("Quantity must be a whole number.\n")
+        return
+    row ={
+        "item_id":next_item_id(),
+        "item_name":name,
+        "quantity":str(qty),
+        "unit":unit,
+        "added_by":added_by,
+        "date_added":datetime.now().strftime("%Y-%m-%d"),
+    }
+    append_row(row)
+    print("Item added.\n")
