@@ -47,3 +47,9 @@ def next_item_id(): #Generates the next available unique item ID for new invento
         except ValueError:
             pass
     return str(max_id + 1)
+
+def append_row(row): #Adds a new record to the inventory csv ensuring the file exists and is formatted first.
+    ensure_csv_ready()
+    with open(CSV_PATH, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f,fieldnames=COLUMNS)
+        w.writerow(row)
