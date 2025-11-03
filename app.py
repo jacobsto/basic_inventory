@@ -93,3 +93,27 @@ def list_items(): #Display all record in the inventory in a readable format.
           f"{r.get('unit',''):<8} "
           f"{r.get('added_by',''):<10} "
           f"{r.get('date_added',''):<12}")
+        
+def delete_item(): # Remove an item from the inventory by entering the ID for authorised users.
+    print("\n--- Delete Item ---")
+    rows = read_all()
+    if not rows:
+        print("No items to delete.\n")
+        return
+
+    list_items()  # show current items
+    item_id = input("Enter the ID of the item to delete: ").strip()
+
+    # Filter out the row with the matching ID
+    updated_rows = [r for r in rows if r.get("item_id") != item_id]
+
+    if len(updated_rows) == len(rows):
+        print(f"No item found with ID {item_id}.\n")
+        return
+
+    # Overwrite CSV with the updated list
+    with open(CSV_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=COLUMNS)
+        writer.writeheader()
+        writer.writerows(updated_rows)
+    print(f"Item with ID {item_id} deleted successfully.\n")
