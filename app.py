@@ -117,3 +117,54 @@ def delete_item(): # Remove an item from the inventory by entering the ID for au
         writer.writeheader()
         writer.writerows(updated_rows)
     print(f"Item with ID {item_id} deleted successfully.\n")
+
+def manage_users(): #Allow the admin to view and manage user accounts.
+    """Allow admin to view and edit user access levels."""
+    while True:
+        print("\n--- User Management ---")
+        print("1) List users")
+        print("2) Add user")
+        print("3) Change user role")
+        print("4) Back to main menu")
+
+        choice = input("Choose (1/2/3/4): ").strip()
+        users = read_users()
+
+        if choice == "1":
+            print(f"\n{'Username':<15}{'Role':<12}")
+            print("-" * 27)
+            for u in users:
+                print(f"{u['username']:<15}{u['role']:<12}")
+
+        elif choice == "2":
+            new_user = input("New username: ").strip()
+            if any(u["username"] == new_user for u in users):
+                print("User already exists.\n")
+                continue
+            new_pass = input("Password: ").strip()
+            new_role = input("Role (admin/privileged/unprivileged): ").strip().lower()
+            if new_role not in ["admin", "privileged", "unprivileged"]:
+                print("Invalid role.\n")
+                continue
+            users.append({"username": new_user, "password": new_pass, "role": new_role})
+            write_users(users)
+            print("User added successfully.\n")
+
+        elif choice == "3":
+            username = input("Username to modify: ").strip()
+            user = next((u for u in users if u["username"] == username), None)
+            if not user:
+                print("User not found.\n")
+                continue
+            new_role = input("New role (admin/privileged/unprivileged): ").strip().lower()
+            if new_role not in ["admin", "privileged", "unprivileged"]:
+                print("Invalid role.\n")
+                continue
+            user["role"] = new_role
+            write_users(users)
+            print("Role updated successfully.\n")
+
+        elif choice == "4":
+            break
+        else:
+            print("Invalid choice.\n")
