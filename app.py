@@ -57,6 +57,9 @@ def append_row(row): #Adds a new record to the inventory csv ensuring the file e
 def add_item(added_by): #Create a new inventory record with validated data and append it to the csv.
     print("\n--- Add Item ---")
     name = input ("Item name: ").strip()
+    while name == "":
+        print("Item name cannot be empty.")
+        name = input("Item name: ").strip()
     qty_text = input ("Quantity (whole number): ").strip()
     unit = input("Unit (e.g. pcs): ").strip() or "pcs"
     try:
