@@ -141,10 +141,16 @@ def manage_users(): #Allow the admin to view and manage user accounts.
 
         elif choice == "2":
             new_user = input("New username: ").strip()
+            while new_user == "":
+                print("Username cannot be empty.")
+                new_user = input("New username: ").strip()
             if any(u["username"] == new_user for u in users):
                 print("User already exists.\n")
                 continue
             new_pass = input("Password: ").strip()
+            while new_pass == "":
+                print("Password cannot be empty.")
+                new_pass = input("Password: ").strip()
             new_role = input("Role (admin/privileged/unprivileged): ").strip().lower()
             if new_role not in ["admin", "privileged", "unprivileged"]:
                 print("Invalid role.\n")
